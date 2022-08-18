@@ -21,6 +21,23 @@ defmodule StreamArchiverWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    scope "/tags" do
+      live "/", TagLive.Index, :index
+      live "/new", TagLive.Index, :new
+      live "/:id/edit", TagLive.Index, :edit
+
+      live "/:id", TagLive.Show, :show
+      live "/:id/show/edit", TagLive.Show, :edit
+    end
+
+    scope "/streams" do
+      live "/", StreamLive.Index, :index
+      live "/new", StreamLive.Index, :new
+      live "/:id/edit", StreamLive.Index, :edit
+      live "/:id", StreamLive.Show, :show
+      live "/:id/show/edit", StreamLive.Show, :edit
+    end
   end
 
   # Other scopes may use custom stacks.
