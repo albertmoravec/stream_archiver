@@ -19,6 +19,8 @@ defmodule StreamArchiverWeb.Router do
 
   forward "/api", StreamArchiverApiWeb.Router
 
+  get "/swaggerui", OpenApiSpex.Plug.SwaggerUI, path: "/api/openapi"
+
   scope "/", StreamArchiverWeb do
     pipe_through :browser
 

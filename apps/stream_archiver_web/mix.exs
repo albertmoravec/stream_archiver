@@ -49,8 +49,10 @@ defmodule StreamArchiverWeb.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:stream_archiver, in_umbrella: true},
+      {:stream_archiver_api_web, in_umbrella: true},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:open_api_spex, "~> 3.12"}
     ]
   end
 

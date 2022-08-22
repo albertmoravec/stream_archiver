@@ -3,6 +3,13 @@ defmodule StreamArchiverApiWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug OpenApiSpex.Plug.PutApiSpec, module: StreamArchiverApiWeb.ApiSpec
+  end
+
+  scope "/" do
+    pipe_through :api
+
+    get "/openapi", OpenApiSpex.Plug.RenderSpec, []
   end
 
   scope "/", StreamArchiverApiWeb do
