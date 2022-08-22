@@ -17,6 +17,8 @@ defmodule StreamArchiverWeb.Router do
     plug :accepts, ["json"]
   end
 
+  forward "/api", StreamArchiverApiWeb.Router
+
   scope "/", StreamArchiverWeb do
     pipe_through :browser
 
