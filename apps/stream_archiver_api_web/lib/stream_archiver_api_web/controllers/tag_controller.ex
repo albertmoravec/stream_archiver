@@ -7,7 +7,6 @@ defmodule StreamArchiverApiWeb.TagController do
   alias StreamArchiver.Tags
   alias StreamArchiver.Tags.Tag
 
-  alias StreamArchiverApiWeb.Schemas.Tag.TagSchema
   alias StreamArchiverApiWeb.Schemas.Tag.TagCreateRequest
   alias StreamArchiverApiWeb.Schemas.Tag.TagUpdateRequest
   alias StreamArchiverApiWeb.Schemas.Tag.TagResponse

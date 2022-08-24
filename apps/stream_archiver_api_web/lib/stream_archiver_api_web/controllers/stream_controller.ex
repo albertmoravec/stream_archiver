@@ -7,7 +7,6 @@ defmodule StreamArchiverApiWeb.StreamController do
   alias StreamArchiver.Streams
   alias StreamArchiver.Streams.Stream
 
-  alias StreamArchiverApiWeb.Schemas.Stream.StreamSchema
   alias StreamArchiverApiWeb.Schemas.Stream.StreamCreateRequest
   alias StreamArchiverApiWeb.Schemas.Stream.StreamUpdateRequest
   alias StreamArchiverApiWeb.Schemas.Stream.StreamResponse

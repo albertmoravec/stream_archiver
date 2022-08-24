@@ -10,14 +10,14 @@
 import Config
 
 config :stream_archiver_api_web,
-  ecto_repos: [StreamArchiverApiWeb.Repo],
+  ecto_repos: [StreamArchiver.Repo],
   generators: [context_app: :stream_archiver]
 
 # Configures the endpoint
 config :stream_archiver_api_web, StreamArchiverApiWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: StreamArchiverApiWeb.ErrorView, accepts: ~w(json), layout: false],
-  pubsub_server: StreamArchiverApiWeb.PubSub,
+  pubsub_server: StreamArchiver.PubSub,
   live_view: [signing_salt: "3XtxBfbp"]
 
 # Configure Mix tasks and generators

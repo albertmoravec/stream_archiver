@@ -1,5 +1,6 @@
 defmodule StreamArchiverApiWeb.ApiSpec do
-  alias OpenApiSpex.{Components, Info, OpenApi, Paths, Server}
+  alias OpenApiSpex.{Info, OpenApi, Paths, Server}
+
   @behaviour OpenApi
 
   @impl OpenApi
