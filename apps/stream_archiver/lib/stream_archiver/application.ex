@@ -11,9 +11,9 @@ defmodule StreamArchiver.Application do
       # Start the Ecto repository
       StreamArchiver.Repo,
       # Start the PubSub system
-      {Phoenix.PubSub, name: StreamArchiver.PubSub}
-      # Start a worker by calling: StreamArchiver.Worker.start_link(arg)
-      # {StreamArchiver.Worker, arg}
+      {Phoenix.PubSub, name: StreamArchiver.PubSub},
+      # Start Oban job runner
+      {Oban, Application.fetch_env!(:stream_archiver, Oban)}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: StreamArchiver.Supervisor)

@@ -36,5 +36,7 @@ config :logger, level: :warn
 # In test we don't send emails.
 config :stream_archiver, StreamArchiver.Mailer, adapter: Swoosh.Adapters.Test
 
+config :my_app, Oban, testing: :inline
+
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
