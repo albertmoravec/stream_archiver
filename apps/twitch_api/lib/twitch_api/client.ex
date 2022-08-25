@@ -1,5 +1,8 @@
 defmodule TwitchApi.Client do
   alias TwitchApi.Config
+  alias TwitchApi.Auth
+
+  # TODO use Tesla?
 
   use HTTPoison.Base
 
@@ -10,10 +13,15 @@ defmodule TwitchApi.Client do
   end
 
   def process_request_headers(headers) do
-    # TODO Replace token with this https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#client-credentials-grant-flow
+    # TODO error handling
+    {:ok, token} = Auth.get_service_token()
 
     headers
-    |> Keyword.put(:"Authorization", "Bearer " <> Config.authorization_token!())
+    |> Keyword.put(:Authorization, "Bearer " <> token)
     |> Keyword.put(:"Client-Id", Config.client_id!())
+  end
+
+  def process_response_body(body) do
+    Jason.decode!(body)
   end
 end

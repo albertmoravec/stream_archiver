@@ -112,6 +112,13 @@ config :phoenix, :plug_init_mode, :runtime
 
 config :open_api_spex, :cache_adapter, OpenApiSpex.Plug.NoneCache
 
+config :twitch_api, :openid_connect_providers,
+  twitch: [
+    discovery_document_uri: "https://id.twitch.tv/oauth2/.well-known/openid-configuration",
+    response_type: "code",
+    scope: "openid email profile offline_access"
+  ]
+
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20

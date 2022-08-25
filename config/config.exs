@@ -70,6 +70,10 @@ config :stream_archiver, Oban,
   plugins: [Oban.Plugins.Pruner],
   queues: [default: 10]
 
+config :twitch_api,
+  openid_client: :twitch,
+  token_lifetime: 3600
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
