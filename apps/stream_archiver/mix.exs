@@ -44,6 +44,11 @@ defmodule StreamArchiver.MixProject do
       {:swoosh, "~> 1.3"},
       {:oban, "~> 2.13"},
       {:ex_cmd, "~> 0.7.0"},
+      {:ex_aws, "~> 2.3"},
+      {:ex_aws_s3, "~> 2.3"},
+      {:poison, "~> 5.0"},
+      {:hackney, "~> 1.9"},
+      {:sweet_xml, "~> 0.7"}
     ]
   end
 

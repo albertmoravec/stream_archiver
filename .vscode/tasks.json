@@ -1,0 +1,25 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Compile in test",
+      "type": "process",
+      "options": {
+        "shell": {
+          "executable": "cmd.exe"
+        },
+        "env": {
+          "MIX_ENV": "test"
+        },      
+      },
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "call C:\\\"Program Files\"\\\"Microsoft Visual Studio\"\\2022\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat amd64_x86 & mix deps.compile",
+      ],
+      "problemMatcher": []
+    }
+  ]
+}
