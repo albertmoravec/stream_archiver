@@ -22,6 +22,10 @@ config :stream_archiver_api_web, StreamArchiverApiWeb.Endpoint,
 
 # Configure Mix tasks and generators
 config :stream_archiver,
+  output_module: StreamArchiver.Recordings.Output.File,
+  file_output: [
+    storage_path: "./"
+  ],
   ecto_repos: [StreamArchiver.Repo]
 
 # Configures the mailer
