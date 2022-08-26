@@ -37,6 +37,10 @@ defmodule StreamArchiver.Streams do
   """
   def get_stream!(id), do: Repo.get!(Stream, id)
 
+  def get_stream_by_user_id(user_id) do
+    Repo.one(from s in Stream, where: s.broadcaster_user_id == ^user_id)
+  end
+
   @doc """
   Creates a stream.
 
