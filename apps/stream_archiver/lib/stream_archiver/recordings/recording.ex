@@ -3,8 +3,8 @@ defmodule StreamArchiver.Recordings.Recording do
   import Ecto.Changeset
 
   schema "recordings" do
-
     field :stream_id, :id
+    field :file_name, :string
 
     timestamps()
   end
@@ -12,7 +12,7 @@ defmodule StreamArchiver.Recordings.Recording do
   @doc false
   def changeset(recording, attrs) do
     recording
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:stream_id, :file_name])
+    |> validate_required([:stream_id, :file_name])
   end
 end
