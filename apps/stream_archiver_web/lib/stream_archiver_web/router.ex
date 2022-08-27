@@ -21,6 +21,12 @@ defmodule StreamArchiverWeb.Router do
 
   get "/swaggerui", OpenApiSpex.Plug.SwaggerUI, path: "/api/openapi"
 
+  scope "/webhooks", StreamArchiverWeb do
+    pipe_through :api
+
+    post "/stream-online", WebhookController, :stream_online
+  end
+
   scope "/", StreamArchiverWeb do
     pipe_through :browser
 

@@ -15,7 +15,12 @@ defmodule StreamArchiverApiWeb.Router do
   scope "/", StreamArchiverApiWeb do
     pipe_through :api
 
-    resources "/streams", StreamController, except: [:new, :edit]
+    scope "/streams" do
+      resources "/", StreamController, except: [:new, :edit]
+
+      post "/:id/start-recording", StreamController, :start_recording
+    end
+
     resources "/tags", TagController, except: [:new, :edit]
   end
 end

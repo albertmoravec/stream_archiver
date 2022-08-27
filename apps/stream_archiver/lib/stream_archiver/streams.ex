@@ -37,8 +37,8 @@ defmodule StreamArchiver.Streams do
   """
   def get_stream!(id), do: Repo.get!(Stream, id)
 
-  def get_stream_by_user_id(user_id) do
-    Repo.one(from s in Stream, where: s.broadcaster_user_id == ^user_id)
+  def get_stream_by_broadcaster_id(broadcaster_id) do
+    Repo.one(from s in Stream, where: s.broadcaster_user_id == ^broadcaster_id)
   end
 
   @doc """
@@ -104,5 +104,11 @@ defmodule StreamArchiver.Streams do
   """
   def change_stream(%Stream{} = stream, attrs \\ %{}) do
     Stream.changeset(stream, attrs)
+  end
+
+  def start_recording(%Stream{} = stream) do
+    %{"id" => stream.id, "name" => stream.name}
+    |> StreamArchiver.Recordings.Worker.new()
+    |> Oban.insert(max_attempt: 1)
   end
 end

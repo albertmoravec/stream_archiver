@@ -48,7 +48,8 @@ defmodule StreamArchiver.MixProject do
       {:ex_aws_s3, "~> 2.3"},
       {:poison, "~> 5.0"},
       {:hackney, "~> 1.9"},
-      {:sweet_xml, "~> 0.7"}
+      {:sweet_xml, "~> 0.7"},
+      {:twitch_api, in_umbrella: true}
     ]
   end
 

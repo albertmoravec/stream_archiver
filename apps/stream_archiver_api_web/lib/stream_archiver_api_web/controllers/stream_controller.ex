@@ -119,4 +119,11 @@ defmodule StreamArchiverApiWeb.StreamController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def start_recording(conn, %{"id" => id}) do
+    Streams.get_stream!(id)
+    |> Streams.start_recording()
+
+    send_resp(conn, :ok, "")
+  end
 end
