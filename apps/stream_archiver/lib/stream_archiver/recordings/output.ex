@@ -1,16 +1,16 @@
 defmodule StreamArchiver.Recordings.Output do
-  @callback create_output(name :: binary) :: {:ok, Stream.default()} | {:error, term}
+  @callback save_output(output_stream :: Stream.default(), file_name :: binary) :: :ok | {:error, term}
 
-  def create_output(name) do
+  def save_output(output_stream, file_name) do
     with {:ok, module} <- current_output() do
-      module.create_output(name)
+      module.save_output(output_stream, file_name)
     end
   end
 
   defp current_output() do
     case Application.fetch_env(:stream_archiver, :output_module) do
       :error -> {:error, :output_not_set}
-      output -> output
+      {:ok, module} -> {:ok, module}
     end
   end
 end

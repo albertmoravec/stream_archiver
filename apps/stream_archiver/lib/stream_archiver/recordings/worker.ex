@@ -11,28 +11,20 @@ defmodule StreamArchiver.Recordings.Worker do
 
   def record_stream(stream_name) do
     raw_stream =
-      ExCmd.stream!(
-        [
-          "streamlink",
-          "--stdout",
-          "--twitch-api-header=Authentication=OAuth #{user_token!()}",
-          "twitch.tv/#{stream_name}",
-          "audio_only"
-        ],
-        log: true
-      )
+      ExCmd.stream!([
+        "streamlink",
+        "--stdout",
+        "--twitch-api-header=Authentication=OAuth #{user_token!()}",
+        "twitch.tv/#{stream_name}",
+        "audio_only"
+      ])
 
     audio_stream =
       ExCmd.stream!(["ffmpeg", "-i", "pipe:0", "-map", "0:a", "-c", "copy", "-f", "adts", "-"],
         input: raw_stream
-        # log: true
       )
 
-    {:ok, output_stream} = create_output(stream_file_name(stream_name) <> ".aac")
-
-    audio_stream
-    |> Stream.into(output_stream)
-    |> Stream.run()
+    save_output(audio_stream, stream_file_name(stream_name) <> ".aac")
   end
 
   def stream_file_name(stream_name) do
