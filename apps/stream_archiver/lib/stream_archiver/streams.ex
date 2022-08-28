@@ -7,6 +7,7 @@ defmodule StreamArchiver.Streams do
   alias StreamArchiver.Repo
 
   alias StreamArchiver.Streams.Stream
+  alias StreamArchiver.Streams.Webhooks
 
   @doc """
   Returns the list of streams.
@@ -54,9 +55,14 @@ defmodule StreamArchiver.Streams do
 
   """
   def create_stream(attrs \\ %{}) do
-    %Stream{}
-    |> Stream.changeset(attrs)
-    |> Repo.insert()
+    with {:ok, %HTTPoison.Response{body: %{"data" => [%{"id" => broadcaster_id} | []]}}} <- TwitchApi.users(login: attrs[:name]),
+         {:ok, _} <- Webhooks.subscribe_stream_online(broadcaster_id) do
+      attrs = Map.put(attrs, :broadcaster_user_id, broadcaster_id)
+
+      %Stream{}
+      |> Stream.changeset(attrs)
+      |> Repo.insert()
+    end
   end
 
   @doc """
@@ -72,6 +78,8 @@ defmodule StreamArchiver.Streams do
 
   """
   def update_stream(%Stream{} = stream, attrs) do
+    # TODO handle webhook subscriptions
+
     stream
     |> Stream.changeset(attrs)
     |> Repo.update()
@@ -90,7 +98,9 @@ defmodule StreamArchiver.Streams do
 
   """
   def delete_stream(%Stream{} = stream) do
-    Repo.delete(stream)
+    with {:ok, _} <- Webhooks.unsubscribe_stream_online(stream.broadcaster_user_id) do
+      Repo.delete(stream)
+    end
   end
 
   @doc """

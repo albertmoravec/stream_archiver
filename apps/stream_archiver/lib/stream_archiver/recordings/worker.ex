@@ -5,7 +5,14 @@ defmodule StreamArchiver.Recordings.Worker do
 
   require Logger
 
-  use Oban.Worker
+  use Oban.Worker,
+    queue: :recording,
+    unique: [
+      fields: [:args],
+      keys: [:stream_id],
+      period: :infinity,
+      states: [:available, :scheduled, :executing, :retryable]
+    ]
 
   # @impl Oban.Worker
   # def backoff(%Oban.Job{attempt: _attempt}) do

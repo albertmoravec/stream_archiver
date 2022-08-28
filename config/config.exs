@@ -55,8 +55,7 @@ config :stream_archiver_web, StreamArchiverWeb.Endpoint,
 config :esbuild,
   version: "0.14.29",
   default: [
-    args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    args: ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../apps/stream_archiver_web/assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
@@ -72,7 +71,12 @@ config :phoenix, :json_library, Jason
 config :stream_archiver, Oban,
   repo: StreamArchiver.Repo,
   plugins: [Oban.Plugins.Pruner],
-  queues: [default: 10]
+  queues: [
+    default: 10,
+    recording: [
+      limit: 10
+    ]
+  ]
 
 config :twitch_api,
   openid_client: :twitch,
