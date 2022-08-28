@@ -1,4 +1,5 @@
 [
   import_deps: [:phoenix, :open_api_spex],
-  inputs: ["*.{ex,exs}", "{config,lib,test}/**/*.{ex,exs}"]
+  inputs: ["*.{ex,exs}", "{config,lib,test}/**/*.{ex,exs}"],
+  line_length: 160
 ]
