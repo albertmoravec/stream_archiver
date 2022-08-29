@@ -44,13 +44,13 @@ if config_env() == :prod do
   if System.get_env("WEB_SERVER") do
     config :stream_archiver_web, StreamArchiverWeb.Endpoint,
       server: true,
-      url: [host: System.fetch_env!("WEB_HOST") , port: 443]
+      url: [host: System.fetch_env!("WEB_HOST"), port: 443, scheme: "https"]
   end
 
   if System.get_env("API_SERVER") do
     config :stream_archiver_api_web, StreamArchiverApiWeb.Endpoint,
       server: true,
-      url: [host: System.fetch_env!("API_HOST") , port: 443]
+      url: [host: System.fetch_env!("API_HOST"), port: 443, scheme: "https"]
   end
 
   config :stream_archiver,
