@@ -48,4 +48,17 @@ if config_env() == :prod do
   if System.get_env("API_SERVER") do
     config :stream_archiver_api_web, StreamArchiverApiWeb.Endpoint, server: true
   end
+
+  config :stream_archiver,
+    twitch_user_token: System.fetch_env!("TWITCH_USER_TOKEN"),
+    twitch_webhook_secret: System.fetch_env!("TWITCH_WEBHOOK_SECRET")
+
+  config :twitch_api,
+    client_id: System.fetch_env!("TWITCH_CLIENT_ID")
+
+  config :twitch_api, :openid_connect_providers,
+    twitch: [
+      client_id: System.fetch_env!("TWITCH_CLIENT_ID"),
+      client_secret: System.fetch_env!("TWITCH_CLIENT_SECRET")
+    ]
 end
