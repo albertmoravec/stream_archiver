@@ -121,9 +121,8 @@ defmodule StreamArchiverApiWeb.StreamController do
   end
 
   def start_recording(conn, %{"id" => id}) do
-    Streams.get_stream!(id)
-    |> Streams.start_recording()
-
-    send_resp(conn, :ok, "")
+    with :ok <- Streams.get_stream!(id) |> Streams.start_recording() do
+      send_resp(conn, :ok, "")
+    end
   end
 end

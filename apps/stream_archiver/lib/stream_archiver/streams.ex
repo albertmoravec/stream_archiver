@@ -121,8 +121,13 @@ defmodule StreamArchiver.Streams do
   end
 
   def start_recording(%Stream{} = stream) do
-    %{"id" => stream.id, "name" => stream.name}
-    |> StreamArchiver.Recordings.Worker.new()
-    |> Oban.insert(max_attempt: 1)
+    result =
+      %{"id" => stream.id, "name" => stream.name}
+      |> StreamArchiver.Recordings.Worker.new()
+      |> Oban.insert(max_attempt: 1)
+
+    with {:ok, _job} <- result do
+      :ok
+    end
   end
 end
