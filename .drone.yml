@@ -52,6 +52,7 @@ steps:
     - name: mix-temp
       path: /root/.mix
     commands:
+    - cd apps/stream_archiver_web
     - mix assets.deploy
 
   - name: digest
