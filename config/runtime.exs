@@ -56,7 +56,10 @@ if config_env() == :prod do
   config :stream_archiver,
     twitch_user_token: System.fetch_env!("TWITCH_USER_TOKEN"),
     twitch_webhook_secret: System.fetch_env!("TWITCH_WEBHOOK_SECRET"),
-    webhook_base_url: System.fetch_env!("WEBHOOK_BASE_URL")
+    webhook_base_url: System.fetch_env!("WEBHOOK_BASE_URL"),
+    file_output: [
+      storage_path: System.fetch_env!("OUTPUT_PATH")
+    ]
 
   config :twitch_api,
     client_id: System.fetch_env!("TWITCH_CLIENT_ID")
