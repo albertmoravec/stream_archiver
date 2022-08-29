@@ -6,7 +6,10 @@ defmodule StreamArchiverWeb.WebhookController do
   def stream_online(conn, params) do
     message_type = eventsub_message_type(conn)
 
+    # TODO handle errors
     handle_stream_online(message_type, conn, params)
+
+    send_resp(conn, :ok, "")
   end
 
   defp handle_stream_online(:verification, conn, params) do

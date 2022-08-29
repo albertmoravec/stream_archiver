@@ -4,8 +4,9 @@ defmodule StreamArchiver.Streams do
   """
 
   import Ecto.Query, warn: false
-  alias StreamArchiver.Repo
 
+  alias HTTPoison.Response
+  alias StreamArchiver.Repo
   alias StreamArchiver.Streams.Stream
   alias StreamArchiver.Streams.Webhooks
 
@@ -55,13 +56,16 @@ defmodule StreamArchiver.Streams do
 
   """
   def create_stream(attrs \\ %{}) do
-    with {:ok, %HTTPoison.Response{body: %{"data" => [%{"id" => broadcaster_id} | []]}}} <- TwitchApi.users(login: attrs[:name]),
+    with {:ok, %HTTPoison.Response{status_code: 200, body: %{"data" => [%{"id" => broadcaster_id} | []]}}} <- TwitchApi.users(login: attrs["name"]),
          {:ok, _} <- Webhooks.subscribe_stream_online(broadcaster_id) do
-      attrs = Map.put(attrs, :broadcaster_user_id, broadcaster_id)
+      attrs = Map.put(attrs, "broadcaster_user_id", broadcaster_id)
 
       %Stream{}
       |> Stream.changeset(attrs)
       |> Repo.insert()
+    else
+      {:ok, %Response{} = response} -> {:error, response}
+      error -> error
     end
   end
 
