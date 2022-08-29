@@ -14,7 +14,7 @@ defmodule TwitchApi do
       :world
 
   """
-  def users(params) do
+  def users(params \\ []) do
     Client.get("/users", [], params: params)
   end
 end

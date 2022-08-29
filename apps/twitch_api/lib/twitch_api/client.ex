@@ -19,6 +19,14 @@ defmodule TwitchApi.Client do
     headers
     |> Keyword.put(:Authorization, "Bearer " <> token)
     |> Keyword.put(:"Client-Id", Config.client_id!())
+    |> Keyword.put(:"Content-Type", "application/json")
+  end
+
+  def process_request_body(body) do
+    case body do
+      "" -> "{}"
+      body -> Jason.encode!(body)
+    end
   end
 
   def process_response_body(body) do
