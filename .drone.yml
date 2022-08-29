@@ -97,24 +97,24 @@ steps:
       build_args:
       - MIX_ENV=prod
 
-  - name: deploy
-    depends_on:
-      - dockerfile build
-    image: appleboy/drone-ssh
-    settings:
-      host: web-03.km8.vm
-      port: 22
-      username:
-        from_secret: web-01_ssh_user
-      key:
-        from_secret: web-01_ssh_key
-      passphrase:
-        from_secret: web-01_ssh_passphrase
-      script:
-      - cd /srv/docker/stream-archiver
-      - docker-compose down
-      - docker-compose pull
-      - docker-compose up -d
+  # - name: deploy
+  #   depends_on:
+  #     - dockerfile build
+  #   image: appleboy/drone-ssh
+  #   settings:
+  #     host: web-03.km8.vm
+  #     port: 22
+  #     username:
+  #       from_secret: web-01_ssh_user
+  #     key:
+  #       from_secret: web-01_ssh_key
+  #     passphrase:
+  #       from_secret: web-01_ssh_passphrase
+  #     script:
+  #     - cd /srv/docker/stream-archiver
+  #     - docker-compose down
+  #     - docker-compose pull
+  #     - docker-compose up -d
 
 volumes:
   - name: mix-temp
