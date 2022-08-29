@@ -7,7 +7,17 @@ defmodule StreamArchiver.Umbrella.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      releases: [
+        stream_archiver: [
+          applications: [
+            stream_archiver: :permanent,
+            stream_archiver_web: :permanent,
+            stream_archiver_api_web: :permanent,
+            twitch_api: :permanent
+          ]
+        ]
+      ]
     ]
   end
 
