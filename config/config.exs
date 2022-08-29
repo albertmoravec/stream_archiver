@@ -1,24 +1,4 @@
-# This file is responsible for configuring your umbrella
-# and **all applications** and their dependencies with the
-# help of the Config module.
-#
-# Note that all applications in your umbrella share the
-# same configuration and dependencies, which is why they
-# all use the same configuration file. If you want different
-# configurations or dependencies per app, it is best to
-# move said applications out of the umbrella.
 import Config
-
-config :stream_archiver_api_web,
-  ecto_repos: [StreamArchiver.Repo],
-  generators: [context_app: :stream_archiver]
-
-# Configures the endpoint
-config :stream_archiver_api_web, StreamArchiverApiWeb.Endpoint,
-  url: [host: "localhost"],
-  render_errors: [view: StreamArchiverApiWeb.ErrorView, accepts: ~w(json), layout: false],
-  pubsub_server: StreamArchiver.PubSub,
-  live_view: [signing_salt: "3XtxBfbp"]
 
 # Configure Mix tasks and generators
 config :stream_archiver,
@@ -28,13 +8,17 @@ config :stream_archiver,
   ],
   ecto_repos: [StreamArchiver.Repo]
 
+config :stream_archiver, Oban,
+  repo: StreamArchiver.Repo,
+  plugins: [Oban.Plugins.Pruner],
+  queues: [
+    default: 10,
+    recording: [
+      limit: 10
+    ]
+  ]
+
 # Configures the mailer
-#
-# By default it uses the "Local" adapter which stores the emails
-# locally. You can see the emails in your browser, at "/dev/mailbox".
-#
-# For production it's recommended to configure a different adapter
-# at the `config/runtime.exs`.
 config :stream_archiver, StreamArchiver.Mailer, adapter: Swoosh.Adapters.Local
 
 # Swoosh API client is needed for adapters other than SMTP.
@@ -50,6 +34,17 @@ config :stream_archiver_web, StreamArchiverWeb.Endpoint,
   render_errors: [view: StreamArchiverWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: StreamArchiver.PubSub,
   live_view: [signing_salt: "GgO+OeBY"]
+
+config :stream_archiver_api_web,
+  ecto_repos: [StreamArchiver.Repo],
+  generators: [context_app: :stream_archiver]
+
+# Configures the endpoint
+config :stream_archiver_api_web, StreamArchiverApiWeb.Endpoint,
+  url: [host: "localhost"],
+  render_errors: [view: StreamArchiverApiWeb.ErrorView, accepts: ~w(json), layout: false],
+  pubsub_server: StreamArchiver.PubSub,
+  live_view: [signing_salt: "3XtxBfbp"]
 
 # Configure esbuild (the version is required)
 config :esbuild,
@@ -68,22 +63,20 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :stream_archiver, Oban,
-  repo: StreamArchiver.Repo,
-  plugins: [Oban.Plugins.Pruner],
-  queues: [
-    default: 10,
-    recording: [
-      limit: 10
-    ]
-  ]
-
 config :twitch_api,
   openid_client: :twitch,
   token_lifetime: 3600
+
+config :twitch_api, :openid_connect_providers,
+  twitch: [
+    discovery_document_uri: "https://id.twitch.tv/oauth2/.well-known/openid-configuration",
+    response_type: "code",
+    scope: "openid email profile offline_access"
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
 
+# Import local configuration overrides which are not part of the repository
 File.regular?("config/.local.exs") && import_config(".local.exs")
