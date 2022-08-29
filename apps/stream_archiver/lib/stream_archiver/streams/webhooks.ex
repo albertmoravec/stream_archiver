@@ -20,7 +20,7 @@ defmodule StreamArchiver.Streams.Webhooks do
       },
       "transport" => %{
         "method" => "webhook",
-        "callback" => "https://4252-78-45-23-114.eu.ngrok.io/webhooks/stream-online",
+        "callback" => webhook_base_url!() <> "/webhooks/stream-online",
         "secret" => webhook_secret!()
       }
     }
