@@ -23,6 +23,14 @@ defmodule StreamArchiverWeb.StreamLive.Index do
     {:noreply, assign(socket, :streams, list_streams())}
   end
 
+  def handle_event("start_recording", %{"id" => id}, socket) do
+    {:ok, _} =
+      Streams.get_stream!(id)
+      |> Streams.start_recording()
+
+    {:noreply, socket}
+  end
+
   defp list_streams do
     Streams.list_streams()
   end

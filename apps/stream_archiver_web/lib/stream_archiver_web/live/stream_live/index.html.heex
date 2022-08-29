@@ -16,6 +16,7 @@
         <td>
           <span><%= live_redirect "Show", to: Routes.stream_show_path(@socket, :show, stream) %></span>
           <span><%= live_patch "Edit", to: Routes.stream_edit_path(@socket, :edit, stream) %></span>
+          <span><%= link "Start recording", to: "#", phx_click: "start_recording", phx_value_id: stream.id %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: stream.id, data: [confirm: "Are you sure?"] %></span>
         </td>
       </tr>
