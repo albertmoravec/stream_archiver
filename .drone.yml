@@ -47,7 +47,7 @@ steps:
   - name: deploy assets
     image: elixir:1.13-alpine
     depends_on:
-    - download assets
+    - elixir deps compile
     volumes:
     - name: mix-temp
       path: /root/.mix
@@ -68,7 +68,6 @@ steps:
 
   - name: assemble release
     depends_on:
-    - elixir deps compile
     - digest
     image: elixir:1.13-alpine
     volumes:
@@ -100,7 +99,7 @@ steps:
   - name: deploy
     depends_on:
       - dockerfile build
-    image: appleboy/drone-ssh        
+    image: appleboy/drone-ssh
     settings:
       host: web-03.km8.vm
       port: 22
