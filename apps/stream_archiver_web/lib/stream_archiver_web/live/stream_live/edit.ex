@@ -1,4 +1,4 @@
-defmodule StreamArchiverWeb.StreamLive.Show do
+defmodule StreamArchiverWeb.StreamLive.Edit do
   use StreamArchiverWeb, :live_view
 
   alias StreamArchiver.Streams
@@ -9,10 +9,10 @@ defmodule StreamArchiverWeb.StreamLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
+  def handle_params(%{"id" => id}, _url, socket) do
     {:noreply,
      socket
-     |> assign(:page_title, "Show Stream")
+     |> assign(:page_title, "Edit Stream")
      |> assign(:stream, Streams.get_stream!(id))}
   end
 end

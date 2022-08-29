@@ -1,17 +1,15 @@
-<div class="container-fluid">
-  <%= if live_flash(@flash, :info) do %>
-  <div class="alert alert-info alert-dismissible fade show d-flex align-items-center" role="alert">
-    <div><%= live_flash(@flash, :info) %></div>
-    <button type="button" phx-click="lv:clear-flash" phx-value-key="info" class="btn-close" aria-label="Close"></button>
-  </div>
-  <% end %>
-
-  <%= if live_flash(@flash, :error) do %>
-  <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
-    <div><%= live_flash(@flash, :error) %></div>
-    <button type="button" class="btn-close" phx-click="lv:clear-flash" phx-value-key="error" aria-label="Close"></button>
-  </div>
-  <% end %>
-
-  <%= @inner_content %>
+<%= if live_flash(@flash, :info) do %>
+<div class="alert alert-info alert-dismissible fade show d-flex align-items-center" role="alert">
+  <div><%= live_flash(@flash, :info) %></div>
+  <button type="button" phx-click="lv:clear-flash" phx-value-key="info" class="btn-close" aria-label="Close"></button>
 </div>
+<% end %>
+
+<%= if live_flash(@flash, :error) do %>
+<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+  <div><%= live_flash(@flash, :error) %></div>
+  <button type="button" class="btn-close" phx-click="lv:clear-flash" phx-value-key="error" aria-label="Close"></button>
+</div>
+<% end %>
+
+<%= @inner_content %>

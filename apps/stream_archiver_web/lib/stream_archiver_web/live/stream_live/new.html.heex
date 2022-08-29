@@ -1,0 +1,8 @@
+<.live_component
+  module={StreamArchiverWeb.StreamLive.FormComponent}
+  stream={@stream}
+  id={@stream.id || :new}
+  title={@page_title}
+  action={@live_action}
+  return_to={Routes.stream_index_path(@socket, :index)}
+/>

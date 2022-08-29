@@ -1,23 +1,10 @@
 <h1>Listing Streams</h1>
 
-<%= if @live_action in [:new, :edit] do %>
-  <.modal return_to={Routes.stream_index_path(@socket, :index)}>
-    <.live_component
-      module={StreamArchiverWeb.StreamLive.FormComponent}
-      id={@stream.id || :new}
-      title={@page_title}
-      action={@live_action}
-      stream={@stream}
-      return_to={Routes.stream_index_path(@socket, :index)}
-    />
-  </.modal>
-<% end %>
-
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Name</th>
-
+      
       <th></th>
     </tr>
   </thead>
@@ -28,7 +15,7 @@
 
         <td>
           <span><%= live_redirect "Show", to: Routes.stream_show_path(@socket, :show, stream) %></span>
-          <span><%= live_patch "Edit", to: Routes.stream_index_path(@socket, :edit, stream) %></span>
+          <span><%= live_patch "Edit", to: Routes.stream_edit_path(@socket, :edit, stream) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: stream.id, data: [confirm: "Are you sure?"] %></span>
         </td>
       </tr>
@@ -36,4 +23,4 @@
   </tbody>
 </table>
 
-<span><%= live_patch "New Stream", to: Routes.stream_index_path(@socket, :new) %></span>
+<span><%= live_patch "New Stream", to: Routes.stream_new_path(@socket, :new) %></span>

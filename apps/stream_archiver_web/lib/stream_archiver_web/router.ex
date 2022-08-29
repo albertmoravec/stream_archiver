@@ -43,11 +43,10 @@ defmodule StreamArchiverWeb.Router do
 
     scope "/streams" do
       live "/", StreamLive.Index, :index
-      live "/new", StreamLive.Index, :new
-      live "/:id/edit", StreamLive.Index, :edit
+      live "/new", StreamLive.New, :new
+      live "/:id/edit", StreamLive.Edit, :edit
 
       live "/:id", StreamLive.Show, :show
-      live "/:id/show/edit", StreamLive.Show, :edit
     end
 
     scope "/recordings" do

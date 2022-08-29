@@ -2,7 +2,6 @@ defmodule StreamArchiverWeb.StreamLive.Index do
   use StreamArchiverWeb, :live_view
 
   alias StreamArchiver.Streams
-  alias StreamArchiver.Streams.Stream
 
   @impl true
   def mount(_params, _session, socket) do
@@ -10,26 +9,10 @@ defmodule StreamArchiverWeb.StreamLive.Index do
   end
 
   @impl true
-  def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
-  end
-
-  defp apply_action(socket, :edit, %{"id" => id}) do
-    socket
-    |> assign(:page_title, "Edit Stream")
-    |> assign(:stream, Streams.get_stream!(id))
-  end
-
-  defp apply_action(socket, :new, _params) do
-    socket
-    |> assign(:page_title, "New Stream")
-    |> assign(:stream, %Stream{})
-  end
-
-  defp apply_action(socket, :index, _params) do
-    socket
-    |> assign(:page_title, "Listing Streams")
-    |> assign(:stream, nil)
+  def handle_params(_params, _url, socket) do
+    {:noreply,
+     socket
+     |> assign(:page_title, "Listing Streams")}
   end
 
   @impl true

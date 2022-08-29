@@ -42,7 +42,7 @@ defmodule StreamArchiverWeb.StreamLive.FormComponent do
 
   defp save_stream(socket, :new, stream_params) do
     case Streams.create_stream(stream_params) do
-      {:ok, _stream} ->
+      {:ok, stream} ->
         {:noreply,
          socket
          |> put_flash(:info, "Stream created successfully")
