@@ -31,10 +31,6 @@ defmodule StreamArchiver.Recordings.Worker do
     end
   end
 
-  def perform(%Oban.Job{args: args}) do
-    IO.inspect(args, label: "Job args")
-  end
-
   def record_stream(stream_name, file_name) do
     Logger.debug("#{stream_name} recording started to #{file_name}")
 
