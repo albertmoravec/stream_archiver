@@ -42,11 +42,15 @@ if config_env() == :prod do
     secret_key_base: secret_key_base
 
   if System.get_env("WEB_SERVER") do
-    config :stream_archiver_web, StreamArchiverWeb.Endpoint, server: true
+    config :stream_archiver_web, StreamArchiverWeb.Endpoint,
+      server: true,
+      url: [host: System.fetch_env!("WEB_HOST") , port: 443]
   end
 
   if System.get_env("API_SERVER") do
-    config :stream_archiver_api_web, StreamArchiverApiWeb.Endpoint, server: true
+    config :stream_archiver_api_web, StreamArchiverApiWeb.Endpoint,
+      server: true,
+      url: [host: System.fetch_env!("API_HOST") , port: 443]
   end
 
   config :stream_archiver,
