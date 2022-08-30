@@ -30,6 +30,9 @@ defmodule TwitchApi.Client do
   end
 
   def process_response_body(body) do
-    Jason.decode!(body)
+    case body do
+      "" -> ""
+      body -> Jason.decode!(body)
+    end
   end
 end
