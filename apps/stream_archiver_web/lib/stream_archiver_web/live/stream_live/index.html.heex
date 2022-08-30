@@ -1,27 +1,31 @@
-<h1>Listing Streams</h1>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="streams">
-    <%= for stream <- @streams do %>
-      <tr id={"stream-#{stream.id}"}>
-        <td><%= stream.name %></td>
-
-        <td>
-          <span><%= live_redirect "Show", to: Routes.stream_show_path(@socket, :show, stream) %></span>
-          <span><%= live_patch "Edit", to: Routes.stream_edit_path(@socket, :edit, stream) %></span>
-          <span><%= link "Start recording", to: "#", phx_click: "start_recording", phx_value_id: stream.id %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: stream.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<span><%= live_patch "New Stream", to: Routes.stream_new_path(@socket, :new) %></span>
+<div class="row">
+  <div class="col-12 p-4">
+    <h1>Listing Streams</h1>
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+    
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="streams">
+        <%= for stream <- @streams do %>
+          <tr id={"stream-#{stream.id}"}>
+            <td><%= stream.name %></td>
+    
+            <td>
+              <span><%= live_redirect "Show", to: Routes.stream_show_path(@socket, :show, stream) %></span>
+              <span><%= live_patch "Edit", to: Routes.stream_edit_path(@socket, :edit, stream) %></span>
+              <span><%= link "Start recording", to: "#", phx_click: "start_recording", phx_value_id: stream.id %></span>
+              <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: stream.id, data: [confirm: "Are you sure?"] %></span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    
+    <%= live_patch "New Stream", to: Routes.stream_new_path(@socket, :new), class: "btn btn-primary" %>
+  </div>
+</div>
