@@ -24,11 +24,12 @@ defmodule StreamArchiverWeb.StreamLive.Index do
   end
 
   def handle_event("start_recording", %{"id" => id}, socket) do
-    :ok =
-      Streams.get_stream!(id)
-      |> Streams.start_recording()
-
-    {:noreply, socket}
+    with :ok <- Streams.get_stream!(id) |> Streams.start_recording() do
+      {:noreply, put_flash(socket, :info, "Recording started")}
+    else
+      _ ->
+        {:noreply, put_flash(socket, :error, "Error while starting recording")}
+    end
   end
 
   defp list_streams do

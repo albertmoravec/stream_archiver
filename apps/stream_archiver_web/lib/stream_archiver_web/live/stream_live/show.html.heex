@@ -14,5 +14,5 @@
 
 </ul>
 
-<span><%= live_patch "Edit", to: Routes.stream_edit_path(@socket, :edit, @stream), class: "button" %></span> |
-<span><%= live_redirect "Back", to: Routes.stream_index_path(@socket, :index) %></span>
+<%= live_patch "Edit", to: Routes.stream_edit_path(@socket, :edit, @stream), class: "btn btn-primary" %>
+<%= live_redirect "Back", to: Routes.stream_index_path(@socket, :index), class: "btn btn-secondary" %>
