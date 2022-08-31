@@ -1,27 +1,136 @@
-<h1>Log in</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="csrf-token" content={csrf_token_value()}>
+    <%= live_title_tag assigns[:page_title] || "Home", suffix: " · Stream Archiver" %>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>    
+    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
 
-<.form let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
-  <%= if @error_message do %>
-    <div class="alert alert-danger">
-      <p><%= @error_message %></p>
-    </div>
-  <% end %>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
 
-  <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
 
-  <%= label f, :password %>
-  <%= password_input f, :password, required: true %>
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
 
-  <%= label f, :remember_me, "Keep me logged in for 60 days" %>
-  <%= checkbox f, :remember_me %>
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
 
-  <div>
-    <%= submit "Log in" %>
-  </div>
-</.form>
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
 
-<p>
-  <%= link "Register", to: Routes.user_registration_path(@conn, :new) %> |
-  <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
-</p>
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      html,
+      body {
+        font-family: 'Fira Sans Condensed', sans-serif;
+        height: 100%;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+
+      .form-signin {
+        max-width: 330px;
+        padding: 15px;
+      }
+
+      .form-signin .form-floating:focus-within {
+        z-index: 2;
+      }
+
+      .form-signin input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    </style>
+  </head>
+  <body class="text-center">
+    <main class="form-signin w-100 m-auto">
+      <.form let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
+        <i class="bi bi-camera-reels-fill me-2" style="font-size: 4rem;"></i>
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+        <%= if @error_message do %>
+          <div class="alert alert-danger" role="alert">
+            <%= @error_message %>
+          </div>
+        <% end %>
+
+        <div class="form-floating">
+          <%= email_input f, :email, required: true, class: "form-control", id: "floatingInput", placeholder: "name@example.com" %>
+          <%= label f, :email %>
+        </div>
+
+        <div class="form-floating">
+          <%= password_input f, :password, required: true, class: "form-control", id: "floatingPassword", placeholder: "Password" %>
+          <%= label f, :password %>
+        </div>
+
+        <div class="checkbox mb-3">
+          <label>
+            <%= checkbox f, :remember_me %>
+            <%= label f, :remember_me, "Remember me" %>
+          </label>
+        </div>
+
+        <%= submit "Sign in", class: "w-100 btn btn-lg btn-primary" %>
+        <p class="mt-3 mb-3 text-muted">&copy; 2022</p>
+      </.form>
+    </main>
+  </body>
+</html>
