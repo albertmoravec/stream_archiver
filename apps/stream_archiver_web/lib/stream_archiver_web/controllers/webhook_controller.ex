@@ -8,8 +8,6 @@ defmodule StreamArchiverWeb.WebhookController do
 
     # TODO handle errors
     handle_stream_online(message_type, conn, params)
-
-    send_resp(conn, :ok, "")
   end
 
   defp handle_stream_online(:verification, conn, params) do
