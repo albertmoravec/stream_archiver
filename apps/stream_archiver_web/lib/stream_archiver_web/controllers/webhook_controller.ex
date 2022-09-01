@@ -15,6 +15,9 @@ defmodule StreamArchiverWeb.WebhookController do
   end
 
   defp handle_stream_online(:notification, conn, params) do
+    IO.inspect(conn.req_headers, label: "Stream online headers")
+    IO.inspect(params, label: "Stream online params")
+
     with :ok <- Webhooks.handle_stream_online(params["event"]["broadcaster_user_id"]) do
       send_resp(conn, :ok, "")
     end
