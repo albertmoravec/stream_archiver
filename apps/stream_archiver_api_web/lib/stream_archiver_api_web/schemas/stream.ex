@@ -12,11 +12,15 @@ defmodule StreamArchiverApiWeb.Schemas.Stream do
       required: [:name],
       properties: %{
         id: %Schema{type: :integer, readOnly: true, description: "Stream ID"},
-        name: %Schema{type: :string, description: "Stream name"}
+        name: %Schema{type: :string, description: "Stream name"},
+        broadcaster_user_id: %Schema{type: :string, description: "Broadcaster ID"},
+        eventsub_id: %Schema{type: :string, description: "EventSub ID"}
       },
       example: %{
         "id" => 1,
-        "name" => "arptryx"
+        "name" => "arptryx",
+        "broadcaster_user_id" => "695513849",
+        "eventsub_id" => "4595322f-0bc6-45a8-b3c0-7dad229b8a14"
       }
     })
   end
@@ -31,8 +35,8 @@ defmodule StreamArchiverApiWeb.Schemas.Stream do
       },
       example: %{
         "data" => [
-          %{"id" => 1, "name" => "arptryx"},
-          %{"id" => 2, "name" => "char_dj"}
+          %{"id" => 1, "name" => "arptryx", "broadcaster_user_id" => "695513849", "eventsub_id" => "4595322f-0bc6-45a8-b3c0-7dad229b8a14"},
+          %{"id" => 2, "name" => "char_dj", "broadcaster_user_id" => "195739322", "eventsub_id" => "af5930dd-1234-5678-0900-7dd135677884"}
         ]
       }
     })

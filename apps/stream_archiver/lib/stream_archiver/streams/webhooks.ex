@@ -5,10 +5,12 @@ defmodule StreamArchiver.Streams.Webhooks do
   import StreamArchiver.Streams
   import StreamArchiver.Config
 
-  def handle_stream_online(broadcaster_id) do
-    broadcaster_id
-    |> get_stream_by_broadcaster_id()
-    |> start_recording()
+  def handle_stream_online(broadcaster_id, eventsub_id) do
+    case get_stream_by_broadcaster_id(broadcaster_id) do
+      nil -> {:error, :stream_not_found}
+      stream when stream.eventsub_id != eventsub_id -> {:error, :invalid_eventsub_id}
+      stream -> start_recording(stream)
+    end
   end
 
   def subscribe_stream_online(broadcaster_id) do
@@ -34,27 +36,11 @@ defmodule StreamArchiver.Streams.Webhooks do
     end
   end
 
-  def unsubscribe_stream_online(broadcaster_id) do
-    # FIXME this is abomination
-
-    with {:ok, %Response{status_code: 200, body: %{"data" => data}}} <- EventSub.list(user_id: broadcaster_id) do
-      case data do
-        [%{"id" => subscription_id} | _] ->
-          with {:ok, %Response{status_code: 204}} <- EventSub.unsubscribe(id: subscription_id) do
-            {:ok, :unsubscribed}
-          else
-            {:ok, %Response{} = response} -> {:error, response}
-          end
-
-        [] ->
-          {:ok, :no_subscription}
-
-        _ ->
-          {:error, :invalid_data}
-      end
+  def unsubscribe_stream_online(eventsub_id) do
+    with {:ok, %Response{status_code: 204}} <- EventSub.unsubscribe(id: eventsub_id) do
+      {:ok, :unsubscribed}
     else
       {:ok, %Response{} = response} -> {:error, response}
-      error -> error
     end
   end
 end

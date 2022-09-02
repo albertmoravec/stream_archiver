@@ -28,6 +28,14 @@
             <%= error_tag f, :broadcaster_user_id %>
           </div>
         </div>
+
+        <div class="mb-3">
+          <%= label f, :eventsub_id, class: "form-label" %>
+          <%= text_input f, :eventsub_id, disabled: true, class: "form-control" %>
+          <div class="invalid-feedback">
+            <%= error_tag f, :eventsub_id %>
+          </div>
+        </div>
       
         <%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary" %>
 

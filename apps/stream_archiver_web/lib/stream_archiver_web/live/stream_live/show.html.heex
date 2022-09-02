@@ -12,6 +12,11 @@
     <%= @stream.broadcaster_user_id %>
   </li>
 
+  <li>
+    <strong>EventSub ID:</strong>
+    <%= @stream.eventsub_id %>
+  </li>
+
 </ul>
 
 <%= live_patch "Edit", to: Routes.stream_edit_path(@socket, :edit, @stream), class: "btn btn-primary" %>

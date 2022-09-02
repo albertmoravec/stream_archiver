@@ -57,8 +57,11 @@ defmodule StreamArchiver.Streams do
   """
   def create_stream(attrs \\ %{}) do
     with {:ok, %HTTPoison.Response{status_code: 200, body: %{"data" => [%{"id" => broadcaster_id} | []]}}} <- TwitchApi.users(login: attrs["name"]),
-         {:ok, _} <- Webhooks.subscribe_stream_online(broadcaster_id) do
-      attrs = Map.put(attrs, "broadcaster_user_id", broadcaster_id)
+         {:ok, subscription_id} <- Webhooks.subscribe_stream_online(broadcaster_id) do
+      attrs =
+        attrs
+        |> Map.put("broadcaster_user_id", broadcaster_id)
+        |> Map.put("eventsub_id", subscription_id)
 
       %Stream{}
       |> Stream.changeset(attrs)
@@ -102,7 +105,7 @@ defmodule StreamArchiver.Streams do
 
   """
   def delete_stream(%Stream{} = stream) do
-    with {:ok, _} <- Webhooks.unsubscribe_stream_online(stream.broadcaster_user_id) do
+    with {:ok, _} <- Webhooks.unsubscribe_stream_online(stream.eventsub_id) do
       Repo.delete(stream)
     end
   end

@@ -8,6 +8,7 @@ defmodule StreamArchiver.Streams.Stream do
   schema "streams" do
     field :name, :string
     field :broadcaster_user_id, :string
+    field :eventsub_id, :string
 
     many_to_many :tags, Tag, join_through: StreamTag
 
@@ -17,9 +18,10 @@ defmodule StreamArchiver.Streams.Stream do
   @doc false
   def changeset(stream, attrs) do
     stream
-    |> cast(attrs, [:name, :broadcaster_user_id])
-    |> validate_required([:name, :broadcaster_user_id])
+    |> cast(attrs, [:name, :broadcaster_user_id, :eventsub_id])
+    |> validate_required([:name, :broadcaster_user_id, :eventsub_id])
     |> unique_constraint(:name)
     |> unique_constraint(:broadcaster_user_id)
+    |> unique_constraint(:eventsub_id)
   end
 end

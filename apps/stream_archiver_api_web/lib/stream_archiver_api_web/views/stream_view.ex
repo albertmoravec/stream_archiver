@@ -13,7 +13,9 @@ defmodule StreamArchiverApiWeb.StreamView do
   def render("stream.json", %{stream: stream}) do
     %{
       id: stream.id,
-      name: stream.name
+      name: stream.name,
+      broadcaster_user_id: stream.broadcaster_user_id,
+      eventsub_id: stream.eventsub_id
     }
   end
 end
